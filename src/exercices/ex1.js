@@ -13,4 +13,8 @@ const data = {"employees":[
 export default function ex1() {
 
     // TODO
+    const nbEmployees =  data.employees.length;
+    const totalAge =   data.employees.reduce((x,y) => x + y.age, 0);
+
+    console.log("Average", totalAge / nbEmployees);
 }

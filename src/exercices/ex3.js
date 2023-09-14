@@ -9,5 +9,22 @@
 export default function ex3() {
 
     // TODO
+    Promise.all([
+        fetch('https://jsonplaceholder.typicode.com/users').then(resp => resp.json()),
+        fetch('https://jsonplaceholder.typicode.com/posts').then(resp => resp.json()),
+      ]).then(response => {
+        const usersPair = response[0].filter(x => x.id % 2 === 0);// Users keep only even identifiers
+        const postsPair = response[1].filter(x => x.id % 2 === 0 && x.userId % 2 === 0);// Posts keep only even identifiers
+
+        const result =  postsPair.map(x =>  {
+            return {
+                "title" :x.title,
+                "username": usersPair.filter(user => user.id === x.userId)
+                                        .map(y => y.username)[0]
+            }
+        });
+
+        console.log(result);
+      })
 }
 
